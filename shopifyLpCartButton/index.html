@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ブログ記事埋め込み用タグ生成</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  </head>
+  <body> 
+    <h1>ブログ記事埋め込み用タグ生成</h1>
+
+    商品詳細画面のHTMLソースを貼り付けてください:<br>
+    画面を開き、右クリックメニューから「ページのソースを表示」。表示される HTML をコピーし貼り付け「作成ボタン」をクリックしてください。<br><br>
+    <textarea rows="15" cols="100" id="productPageHTML"></textarea><br><button id="send" style="margin: 10px; width:100px; height: 40px;">作成</button><button id="clear" style="margin: 10px;">クリア</button>
+
+    <hr>
+    こちらをコピーしてください。<br>
+    <textarea rows="15" cols="100" id="formText"></textarea>
+
+    <textarea rows="10" cols="60" id="first" style="display:none;">
+      <!-- Add cart Start -->
+      <div class="product-template__container" id="ProductSection-product-template" data-section-id="product-template" data-section-type="product" data-enable-history-state="true" data-ajax-enabled="true">
+    </textarea>
+
+    <textarea rows="10" cols="60" id="last" style="display:none;">
+      <p class="visually-hidden" data-product-status="" aria-live="polite" role="status"></p>
+      <p class="visually-hidden" data-loader-status="" aria-live="assertive" role="alert" aria-hidden="true">Adding product to your cart</p>
+      </div>
+    </textarea>
+
+    <script>
+      function getRandom( min, max ) {
+        var random = Math.floor( Math.random() * (max + 1 - min) ) + min;
+        return random;
+      }
+
+      $('#clear').click(function() {
+        $("#productPageHTML").val("");
+        $("#formText").val("");
+      });
+
+      $('#send').click(function(){
+        console.log("click");
+        var formText = $("#formText");
+        formText.val("");
+        var prdHtml = $("#productPageHTML").val();
+        if (prdHtml == "") {
+          return;
+        }
+        var output = "";
+        var randomNo = getRandom(1000000, 9999999999);
+
+        try {
+          output = $("#first").val() + $(prdHtml).find("[id^=product_form_]").prop('outerHTML') + $("#last").val();
+          output = output + $(prdHtml).find("#ProductJson-product-template").prop('outerHTML');
+          output = output + "\n<!-- Add cart End -->";
+
+          formText.val(output);
+          formText.val(formText.val().replace(/product-template"/g, 'product-template' + randomNo + '"'));
+          formText.val(formText.val().replace(/single-option-selector-product-template/g, 'single-option-selector-product-template' + randomNo + '"'));
+        } catch(e) {
+          console.log(e);
+        }
+      });
+    </script>
+  </body>
+</html>
