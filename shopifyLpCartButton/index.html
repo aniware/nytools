@@ -7,8 +7,13 @@
   <body> 
     <h1>ブログ記事埋め込み用タグ生成</h1>
 
-    商品詳細画面のHTMLソースを貼り付けてください:<br>
-    画面を開き、右クリックメニューから「ページのソースを表示」。表示される HTML をコピーし貼り付け「作成ボタン」をクリックしてください。<br><br>
+    Chromeで商品詳細画面を開き、右クリックメニューから「検証」をクリックします。
+    <br>
+    DevTools というウインドウが開きますので上部にあるタブ「Elements」を選択します。
+    <br><br>
+    表示されているHTMLコードから &lt;html class="js" lang="en"&gt; を選択し
+    <br>
+    Copy -> Copy element でコピーし舌のテキストエリアに貼り付け「作成ボタン」をクリックしてください。(<a href="../2.png"><b>参考画像</b></a>)<br><br>
     <textarea rows="15" cols="100" id="productPageHTML"></textarea><br><button id="send" style="margin: 10px; width:100px; height: 40px;">作成</button><button id="clear" style="margin: 10px;">クリア</button>
 
     <hr>
