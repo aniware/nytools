@@ -61,6 +61,7 @@
           formText.val(output);
           formText.val(formText.val().replace(/product-template"/g, 'product-template' + randomNo + '"'));
           formText.val(formText.val().replace(/single-option-selector-product-template/g, 'single-option-selector-product-template' + randomNo + '"'));
+          formText.val(formText.val().replace(/BEFORE PRE-ORDER PERIOD/g, 'PRE-ORDER'));
         } catch(e) {
           console.log(e);
         }
