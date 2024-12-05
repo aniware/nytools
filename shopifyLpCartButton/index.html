@@ -21,7 +21,6 @@
     <textarea rows="15" cols="100" id="formText"></textarea>
 
     <textarea rows="10" cols="60" id="first" style="display:none;">
-      <!-- Add cart Start -->
       <div class="product-template__container" id="ProductSection-product-template" data-section-id="product-template" data-section-type="product" data-enable-history-state="true" data-ajax-enabled="true">
     </textarea>
 
@@ -54,14 +53,27 @@
         var randomNo = getRandom(1000000, 9999999999);
 
         try {
-          output = $("#first").val() + $(prdHtml).find("[id^=product_form_]").prop('outerHTML') + $("#last").val();
-          output = output + $(prdHtml).find("#ProductJson-product-template").prop('outerHTML');
-          output = output + "\n<!-- Add cart End -->";
+          var parentDiv = $(prdHtml).find("[id^=ProductSection-template]").prop('outerHTML');
+          parentDiv = $(parentDiv);
+          parentDiv.empty();
 
+          parentDiv.append("\n\n");
+          parentDiv.append($(prdHtml).find("[id^=product_form_]"));
+          parentDiv.append("\n\n");
+          parentDiv.append($(prdHtml).find("[data-product-status]"));
+          parentDiv.append("\n");
+          parentDiv.append($(prdHtml).find("[data-loader-status]"));
+          parentDiv.append("\n\n");
+          parentDiv.append($(prdHtml).find("[id^=ProductJson-template--]"));
+          parentDiv.append("\n\n");
+
+          console.log(parentDiv.prop('outerHTML'));
+          output = parentDiv.prop('outerHTML');
+          output = "<!-- Add cart Start -->\n\n" + output;
+          output = output + "\n\n<!-- Add cart End -->";
+          output = output.replace(/>Pre-order</g, '>ADD TO CART<');
+          output = output.replace(/ page-width/g, '');
           formText.val(output);
-          formText.val(formText.val().replace(/product-template"/g, 'product-template' + randomNo + '"'));
-          formText.val(formText.val().replace(/single-option-selector-product-template/g, 'single-option-selector-product-template' + randomNo + '"'));
-          formText.val(formText.val().replace(/BEFORE PRE-ORDER PERIOD/g, 'PRE-ORDER'));
         } catch(e) {
           console.log(e);
         }
@@ -69,3 +81,4 @@
     </script>
   </body>
 </html>
+
